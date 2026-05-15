@@ -1,171 +1,186 @@
 <!DOCTYPE html>
 <html lang="it">
-
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>Virgin Active Clock</title>
 
 <style>
-
 @font-face{
-    font-family:'Gotham';
-    src:url('Gotham-XLight.otf') format('opentype');
+  font-family:'Gotham';
+  src:url('Gotham-XLight.otf') format('opentype');
 }
 
 *{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
 }
 
 body{
-
-    width:100vw;
-    height:100vh;
-
-    overflow:hidden;
-
-    background:#000;
-
-    color:white;
-
-    font-family:'Gotham', Arial, sans-serif;
-
-    -webkit-font-smoothing:antialiased;
-    -moz-osx-font-smoothing:grayscale;
+  width:100vw;
+  height:100vh;
+  overflow:hidden;
+  background:#000;
+  color:#fff;
+  font-family:'Gotham', Arial, sans-serif;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
 }
 
-.container{
-
-    width:100%;
-    height:100%;
-
-    display:flex;
-
-    justify-content:space-between;
-    align-items:center;
-
-    padding-left:8vw;
-    padding-right:8vw;
+.wrapper{
+  width:100%;
+  height:100%;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:7vw 8vw;
 }
 
-.left{
-    width:40%;
+.logo-area{
+  width:42%;
+  display:flex;
+  align-items:center;
 }
 
 .logo{
-
-    width:70%;
-
-    max-width:520px;
+  width:82%;
+  max-width:620px;
+  display:block;
 }
 
-.right{
-
-    width:50%;
-
-    text-align:right;
+.clock-area{
+  width:48%;
+  text-align:right;
 }
 
 #clock{
-
-    font-size:10vw;
-
-    font-weight:100;
-
-    letter-spacing:2px;
-
-    line-height:1;
+  display:inline-block;
+  font-size:10vw;
+  font-weight:100;
+  line-height:0.95;
+  letter-spacing:0.02em;
+  white-space:nowrap;
 }
 
 #date{
-
-    margin-top:25px;
-
-    font-size:1.2vw;
-
-    letter-spacing:10px;
-
-    opacity:0.65;
+  display:inline-block;
+  margin-top:30px;
+  font-size:1.28vw;
+  letter-spacing:0.58em;
+  opacity:0.62;
+  white-space:nowrap;
 }
 
 .line{
-
-    margin-top:35px;
-
-    margin-left:auto;
-
-    width:38%;
-
-    height:1px;
-
-    background:#7a0015;
-
-    opacity:0.5;
+  width:34%;
+  height:1px;
+  margin-top:34px;
+  margin-left:auto;
+  background:#7a0015;
+  opacity:0.45;
 }
 
-</style>
+/* VERSIONE VERTICALE */
+@media (orientation: portrait){
+  .wrapper{
+    flex-direction:column;
+    justify-content:center;
+    padding:9vh 7vw;
+    gap:8vh;
+  }
 
+  .logo-area{
+    width:100%;
+    justify-content:center;
+  }
+
+  .logo{
+    width:58%;
+    max-width:520px;
+  }
+
+  .clock-area{
+    width:100%;
+    text-align:center;
+  }
+
+  #clock{
+    font-size:18vw;
+  }
+
+  #date{
+    margin-top:28px;
+    font-size:2.2vw;
+    letter-spacing:0.48em;
+  }
+
+  .line{
+    margin-left:auto;
+    margin-right:auto;
+    width:24%;
+  }
+}
+</style>
 </head>
 
 <body>
 
-<div class="container">
+<div class="wrapper">
+  <div class="logo-area">
+    <img src="logo.png" class="logo" alt="Virgin Active">
+  </div>
 
-    <div class="left">
-        <img src="logo.png" class="logo">
-    </div>
-
-    <div class="right">
-
-        <div id="clock">00:00</div>
-
-        <div id="date">
-            VENERDÌ 15 MAGGIO 2026
-        </div>
-
-        <div class="line"></div>
-
-    </div>
-
+  <div class="clock-area">
+    <div id="clock">00:00</div>
+    <br>
+    <div id="date">VENERDÌ 15 MAGGIO 2026</div>
+    <div class="line"></div>
+  </div>
 </div>
 
 <script>
-
 function updateClock(){
+  const now = new Date();
 
-    const now = new Date();
+  const hours = String(now.getHours()).padStart(2,'0');
+  const minutes = String(now.getMinutes()).padStart(2,'0');
 
-    const hours =
-    String(now.getHours()).padStart(2,'0');
+  document.getElementById('clock').textContent = `${hours}:${minutes}`;
 
-    const minutes =
-    String(now.getMinutes()).padStart(2,'0');
+  const options = {
+    weekday:'long',
+    day:'numeric',
+    month:'long',
+    year:'numeric'
+  };
 
-    document.getElementById('clock').innerHTML =
-    `${hours}:${minutes}`;
+  document.getElementById('date').textContent =
+    now.toLocaleDateString('it-IT', options).toUpperCase();
 
-    const options = {
-
-        weekday:'long',
-        day:'numeric',
-        month:'long',
-        year:'numeric'
-    };
-
-    const date =
-    now.toLocaleDateString('it-IT',options);
-
-    document.getElementById('date').innerHTML =
-    date.toUpperCase();
+  matchClockToDate();
 }
 
-setInterval(updateClock,1000);
+function matchClockToDate(){
+  const clock = document.getElementById('clock');
+  const date = document.getElementById('date');
 
+  clock.style.transform = 'scaleX(1)';
+
+  const clockWidth = clock.offsetWidth;
+  const dateWidth = date.offsetWidth;
+
+  if(clockWidth && dateWidth){
+    const scale = dateWidth / clockWidth;
+    clock.style.transformOrigin = 'right center';
+    clock.style.transform = `scaleX(${scale})`;
+  }
+}
+
+window.addEventListener('resize', matchClockToDate);
+
+setInterval(updateClock, 1000);
 updateClock();
-
 </script>
 
 </body>
