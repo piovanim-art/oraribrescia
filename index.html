@@ -1,25 +1,172 @@
 <!DOCTYPE html>
 <html lang="it">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Virgin Active Clock</title>
-  <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Virgin Active Clock</title>
+
+<style>
+
+@font-face{
+    font-family:'Gotham';
+    src:url('Gotham-XLight.otf') format('opentype');
+}
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+
+    width:100vw;
+    height:100vh;
+
+    overflow:hidden;
+
+    background:#000;
+
+    color:white;
+
+    font-family:'Gotham', Arial, sans-serif;
+
+    -webkit-font-smoothing:antialiased;
+    -moz-osx-font-smoothing:grayscale;
+}
+
+.container{
+
+    width:100%;
+    height:100%;
+
+    display:flex;
+
+    justify-content:space-between;
+    align-items:center;
+
+    padding-left:8vw;
+    padding-right:8vw;
+}
+
+.left{
+    width:40%;
+}
+
+.logo{
+
+    width:70%;
+
+    max-width:520px;
+}
+
+.right{
+
+    width:50%;
+
+    text-align:right;
+}
+
+#clock{
+
+    font-size:10vw;
+
+    font-weight:100;
+
+    letter-spacing:2px;
+
+    line-height:1;
+}
+
+#date{
+
+    margin-top:25px;
+
+    font-size:1.2vw;
+
+    letter-spacing:10px;
+
+    opacity:0.65;
+}
+
+.line{
+
+    margin-top:35px;
+
+    margin-left:auto;
+
+    width:38%;
+
+    height:1px;
+
+    background:#7a0015;
+
+    opacity:0.5;
+}
+
+</style>
+
 </head>
 
 <body>
-  <main class="container">
-    <section class="left">
-      <img src="logo.png" class="logo" alt="Virgin Active">
-    </section>
 
-    <section class="right">
-      <div id="clock">00:00</div>
-      <div id="date">VENERDÌ 15 MAGGIO 2026</div>
-      <div class="line"></div>
-    </section>
-  </main>
+<div class="container">
 
-  <script src="script.js"></script>
+    <div class="left">
+        <img src="logo.png" class="logo">
+    </div>
+
+    <div class="right">
+
+        <div id="clock">00:00</div>
+
+        <div id="date">
+            VENERDÌ 15 MAGGIO 2026
+        </div>
+
+        <div class="line"></div>
+
+    </div>
+
+</div>
+
+<script>
+
+function updateClock(){
+
+    const now = new Date();
+
+    const hours =
+    String(now.getHours()).padStart(2,'0');
+
+    const minutes =
+    String(now.getMinutes()).padStart(2,'0');
+
+    document.getElementById('clock').innerHTML =
+    `${hours}:${minutes}`;
+
+    const options = {
+
+        weekday:'long',
+        day:'numeric',
+        month:'long',
+        year:'numeric'
+    };
+
+    const date =
+    now.toLocaleDateString('it-IT',options);
+
+    document.getElementById('date').innerHTML =
+    date.toUpperCase();
+}
+
+setInterval(updateClock,1000);
+
+updateClock();
+
+</script>
+
 </body>
 </html>
