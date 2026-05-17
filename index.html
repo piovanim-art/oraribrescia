@@ -7,7 +7,12 @@
 
 <style>
 @font-face{
-  font-family:'Gotham';
+  font-family:'GothamBook';
+  src:url('Gotham-Book.otf') format('opentype');
+}
+
+@font-face{
+  font-family:'GothamLight';
   src:url('Gotham-XLight.otf') format('opentype');
 }
 
@@ -23,7 +28,7 @@ html, body{
   overflow:hidden;
   background:#000;
   color:#fff;
-  font-family:'Gotham', Arial, sans-serif;
+  font-family:'GothamLight', Arial, sans-serif;
   -webkit-font-smoothing:antialiased;
   -moz-osx-font-smoothing:grayscale;
 }
@@ -61,8 +66,9 @@ html, body{
 }
 
 #clock{
+  font-family:'GothamBook', Arial, sans-serif;
   display:inline-block;
-  font-size:10vw;
+  font-size:8.7vw;
   font-weight:100;
   line-height:.95;
   letter-spacing:.02em;
@@ -72,6 +78,7 @@ html, body{
 #date{
   display:inline-block;
   margin-top:30px;
+  font-family:'GothamLight', Arial, sans-serif;
   font-size:1.28vw;
   letter-spacing:.58em;
   opacity:.62;
@@ -102,7 +109,7 @@ html, body{
   }
 
   #clock{
-    font-size:18vw;
+    font-size:16vw;
   }
 
   #date{
@@ -153,7 +160,6 @@ function updateClock(){
 function matchClockToDate(){
   const clock = document.getElementById('clock');
   const date = document.getElementById('date');
-  const area = document.querySelector('.clock-area');
 
   clock.style.transform = 'scaleX(1)';
 
