@@ -8,7 +8,6 @@
 <title>Virgin Active Clock</title>
 
 <style>
-
 @font-face{
     font-family:'GothamBook';
     src:url('Gotham-Book.otf') format('opentype');
@@ -30,27 +29,20 @@ body{
     width:100%;
     height:100%;
     overflow:hidden;
-
     background:#000;
     color:#fff;
-
+    font-family:'GothamBook', Arial, sans-serif;
     -webkit-font-smoothing:antialiased;
     -moz-osx-font-smoothing:grayscale;
-
-    font-family:'GothamBook', Arial, sans-serif;
 }
 
 .wrapper{
-
     width:100vw;
     height:100vh;
-
     display:flex;
     align-items:center;
     justify-content:space-between;
-
     padding:7vw 8vw;
-
     opacity:0;
     transition:opacity .35s ease;
 }
@@ -59,131 +51,85 @@ body{
     opacity:1;
 }
 
-/* LOGO */
-
 .logo-area{
-
     width:42%;
-
     display:flex;
     align-items:center;
 }
 
 .logo{
-
     width:95%;
     max-width:760px;
-
     display:block;
 }
 
-/* CLOCK */
-
 .clock-area{
-
     width:50%;
-
     text-align:right;
 }
 
 .clock-block{
-
     display:inline-block;
-
     text-align:center;
 }
 
 #clock{
-
     font-family:'GothamBook', Arial, sans-serif;
-
     display:block;
-
-    font-size:10.8vw;
-
+    font-size:10.5vw;
     font-weight:500;
-
     line-height:.82;
-
-    letter-spacing:.01em;
-
+    letter-spacing:.055em;
     white-space:nowrap;
 }
 
 #date{
-
     display:block;
-
     width:100%;
-
     margin-top:22px;
-
     text-align:center;
-
     white-space:nowrap;
-
     font-family:'GothamBook', Arial, sans-serif;
-
     font-size:1.55vw;
-
     font-weight:700;
-
     letter-spacing:.36em;
-
     opacity:.72;
 }
 
-/* VERTICALE */
-
 @media (orientation: portrait){
-
     .wrapper{
-
         flex-direction:column;
-
         justify-content:center;
-
         gap:8vh;
-
         padding:8vh 7vw;
     }
 
     .logo-area{
-
         width:100%;
-
         justify-content:center;
     }
 
     .logo{
-
         width:72%;
-
         max-width:700px;
     }
 
     .clock-area{
-
         width:100%;
-
         text-align:center;
     }
 
     #clock{
-
         font-size:18vw;
+        letter-spacing:.055em;
     }
 
     #date{
-
         margin-top:24px;
-
         font-size:2.7vw;
-
         letter-spacing:.28em;
     }
 }
-
 </style>
 </head>
 
@@ -192,76 +138,47 @@ body{
 <div class="wrapper" id="wrapper">
 
     <div class="logo-area">
-
         <img src="logo.png" class="logo" alt="Virgin Active">
-
     </div>
 
     <div class="clock-area">
-
         <div class="clock-block">
-
             <div id="clock">00:00</div>
-
-            <div id="date">
-                DOMENICA 17 MAGGIO 2026
-            </div>
-
+            <div id="date">DOMENICA 17 MAGGIO 2026</div>
         </div>
-
     </div>
 
 </div>
 
 <script>
-
 function updateClock(){
-
     const now = new Date();
 
-    const hours =
-        String(now.getHours()).padStart(2,'0');
+    const hours = String(now.getHours()).padStart(2,'0');
+    const minutes = String(now.getMinutes()).padStart(2,'0');
 
-    const minutes =
-        String(now.getMinutes()).padStart(2,'0');
-
-    document.getElementById('clock').textContent =
-        `${hours}:${minutes}`;
+    document.getElementById('clock').textContent = `${hours}:${minutes}`;
 
     const options = {
-
         weekday:'long',
-
         day:'numeric',
-
         month:'long',
-
         year:'numeric'
     };
 
     document.getElementById('date').textContent =
-        now
-        .toLocaleDateString('it-IT', options)
-        .toUpperCase();
+        now.toLocaleDateString('it-IT', options).toUpperCase();
 
-    document
-        .getElementById('wrapper')
-        .classList
-        .add('ready');
+    document.getElementById('wrapper').classList.add('ready');
 }
 
 window.addEventListener('load', function(){
-
     document.fonts.ready.then(function(){
-
         updateClock();
-
     });
-
 });
 
 setInterval(updateClock, 1000);
-
 </script>
 
 </body>
