@@ -41,7 +41,7 @@ html, body{
   justify-content:space-between;
   padding:7vw 8vw;
   opacity:0;
-  transition:opacity .4s ease;
+  transition:opacity .35s ease;
 }
 
 .wrapper.ready{
@@ -65,9 +65,14 @@ html, body{
   text-align:right;
 }
 
+.clock-block{
+  display:inline-block;
+  text-align:center;
+}
+
 #clock{
   font-family:'GothamBook', Arial, sans-serif;
-  display:inline-block;
+  display:block;
   font-size:8.7vw;
   font-weight:100;
   line-height:.95;
@@ -76,15 +81,19 @@ html, body{
 }
 
 #date{
-  display:inline-block;
+  display:block;
+  width:100%;
   margin-top:30px;
-  font-family:'GothamLight', Arial, sans-serif;
+  font-family:'GothamBook', Arial, sans-serif;
   font-size:1.28vw;
+  font-weight:600;
   letter-spacing:.58em;
-  opacity:.62;
+  opacity:.68;
+  text-align:center;
   white-space:nowrap;
 }
 
+/* VERSIONE VERTICALE */
 @media (orientation: portrait){
   .wrapper{
     flex-direction:column;
@@ -124,15 +133,18 @@ html, body{
 <body>
 
 <div class="wrapper" id="wrapper">
+
   <div class="logo-area">
     <img src="logo.png" class="logo" alt="Virgin Active">
   </div>
 
   <div class="clock-area">
-    <div id="clock">00:00</div>
-    <br>
-    <div id="date">VENERDÌ 15 MAGGIO 2026</div>
+    <div class="clock-block">
+      <div id="clock">00:00</div>
+      <div id="date">DOMENICA 17 MAGGIO 2026</div>
+    </div>
   </div>
+
 </div>
 
 <script>
@@ -154,38 +166,14 @@ function updateClock(){
   document.getElementById('date').textContent =
     now.toLocaleDateString('it-IT', options).toUpperCase();
 
-  matchClockToDate();
-}
-
-function matchClockToDate(){
-  const clock = document.getElementById('clock');
-  const date = document.getElementById('date');
-
-  clock.style.transform = 'scaleX(1)';
-
-  const clockWidth = clock.offsetWidth;
-  const dateWidth = date.offsetWidth;
-
-  if(clockWidth && dateWidth){
-    const scale = dateWidth / clockWidth;
-
-    clock.style.transformOrigin =
-      window.innerHeight > window.innerWidth ? 'center center' : 'right center';
-
-    clock.style.transform = `scaleX(${scale})`;
-  }
-
   document.getElementById('wrapper').classList.add('ready');
 }
 
 window.addEventListener('load', function(){
   document.fonts.ready.then(function(){
     updateClock();
-    matchClockToDate();
   });
 });
-
-window.addEventListener('resize', matchClockToDate);
 
 setInterval(updateClock, 1000);
 </script>
